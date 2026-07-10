@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lenoah — Agencia aduanal y consorcio de comercio exterior, Tijuana–San Diego</title>
+<meta name="description" content="Lenoah es una agencia aduanal y consorcio de comercio exterior en la frontera Tijuana–San Diego: importación de vehículos, mercancía y carga comercial, gestoría aduanal integral y asesoría en comercio exterior, con agentes certificados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/logo-icon.png">
+<style>
+  :root{
+    --noche:#211609;
+    --noche-2:#2C1C0C;
+    --concreto:#FCF7EC;
+    --concreto-2:#F2E7CE;
+    --papel:#FFFFFF;
+    --acero:#7A6A54;
+    --acero-2:#C9B79A;
+    --naranja:#E67E22;
+    --naranja-oscuro:#B85F14;
+    --amarillo:#F7C331;
+    --amarillo-oscuro:#D9A413;
+    --verde:#2FA84F;
+    --rojo:#E5484D;
+    --linea: rgba(33,22,9,0.12);
+    --linea-clara: rgba(247,195,49,0.20);
+    --radio: 3px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'IBM Plex Sans', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--concreto);
+    color:var(--noche);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img,svg{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  button{font-family:inherit; cursor:pointer;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--acero);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:18px; height:1px;
+    background:var(--acero);
+    display:inline-block;
+  }
+  .eyebrow.on-dark{color:var(--acero-2);}
+  .eyebrow.on-dark::before{background:var(--acero-2);}
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  h1,h2,h3{
+    font-family:var(--font-display);
+    font-weight:600;
+    letter-spacing:-.01em;
+    line-height:1.05;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(252,247,236,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--linea);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+    max-width:1180px; margin:0 auto;
+  }
+  .logo{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:-.02em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo img{ height:34px; width:auto; display:block; }
+  .navlinks{display:flex; gap:34px; align-items:center;}
+  .navlinks a{
+    font-size:14.5px; color:var(--noche); opacity:.72;
+    transition:opacity .15s ease;
+  }
+  .navlinks a:hover{opacity:1;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:14px; font-weight:600;
+    padding:11px 20px;
+    border-radius:var(--radio);
+    border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{ background:var(--noche); color:var(--concreto); }
+  .btn-primary:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(33,22,9,0.25);}
+  .btn-naranja{ background:var(--naranja); color:#fff; }
+  .btn-naranja:hover{ transform:translateY(-1px); box-shadow:0 6px 18px rgba(230,126,34,0.35); }
+  .btn-ghost{ background:transparent; border-color:var(--linea); color:var(--noche); }
+  .btn-ghost:hover{ border-color:var(--noche); }
+  .btn-ghost-dark{ background:transparent; border-color:var(--linea-clara); color:var(--concreto); }
+  .btn-ghost-dark:hover{ border-color:var(--concreto-2); }
+  .btn-sm{ padding:9px 16px; font-size:13px; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--noche);
+    color:var(--concreto);
+    position:relative;
+    overflow:hidden;
+    padding:72px 0 60px;
+    min-height:600px;
+    display:flex;
+    align-items:center;
+  }
+  #garita-canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(33,22,9,0.55) 0%, rgba(33,22,9,0.80) 55%, var(--noche) 100%);
+    z-index:1; pointer-events:none;
+  }
+  .hero .wrap{ position:relative; z-index:2; width:100%; }
+  .hero-inner{ max-width:660px; }
+  .hero-inner h1{
+    font-size:clamp(32px, 4.6vw, 52px);
+    margin:20px 0 20px;
+    color:#fff;
+  }
+  .hero-inner h1 em{ font-style:normal; color:var(--amarillo); }
+  .hero-inner p{
+    font-size:17px; line-height:1.65; color:var(--acero-2);
+    max-width:500px; margin-bottom:30px;
+  }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
+  .hero-strip{ display:flex; gap:0; border-top:1px solid var(--linea-clara); padding-top:20px; max-width:600px; }
+  .hero-strip div{ flex:1; padding-right:22px; border-right:1px solid var(--linea-clara); }
+  .hero-strip div:last-child{border-right:none;}
+  .hero-strip strong{ display:block; font-family:var(--font-mono); font-size:21px; color:#fff; }
+  .hero-strip span{ font-size:12px; color:var(--acero-2); }
+
+  .garita-caption{
+    position:absolute; right:32px; bottom:24px; z-index:2;
+    max-width:250px; background:rgba(33,22,9,0.72);
+    border:1px solid var(--linea-clara); border-radius:5px;
+    padding:13px 15px; backdrop-filter:blur(6px);
+  }
+  .garita-caption .eyebrow{ margin-bottom:7px; }
+  .garita-caption p{ font-size:11.5px; line-height:1.5; color:var(--acero-2); }
+  @media (max-width:960px){ .garita-caption{ display:none; } }
+
+  /* ---------- SECTION generic ---------- */
+  section{ padding:88px 0; }
+  .section-head{ max-width:640px; margin-bottom:48px; }
+  .section-head h2{ font-size:clamp(25px,3.2vw,36px); margin-top:16px; }
+  .section-head p{ margin-top:14px; font-size:15.5px; line-height:1.6; color:var(--acero); }
+
+  /* ---------- SERVICIOS ---------- */
+  .servicios{ background:var(--papel); }
+  .serv-grid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:var(--linea); border:1px solid var(--linea);
+  }
+  .serv-card{ background:var(--papel); padding:30px 26px; transition:background .2s ease; }
+  .serv-card:hover{ background:var(--concreto); }
+  .serv-icon{
+    width:38px; height:38px; margin-bottom:22px;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--naranja-oscuro);
+  }
+  .serv-icon svg{ width:100%; height:100%; }
+  .serv-card h3{ font-size:17.5px; margin-bottom:9px; }
+  .serv-card p{ font-size:13.5px; line-height:1.6; color:var(--acero); }
+
+  /* ---------- OPERACIÓN (carriles) ---------- */
+  .operacion{ background:var(--noche); color:var(--concreto); }
+  .operacion .section-head h2{ color:#fff; }
+  .operacion .section-head p{ color:var(--acero-2); }
+  .carril-list{ display:flex; flex-direction:column; }
+  .carril{
+    display:grid; grid-template-columns:140px 1fr 1fr;
+    gap:28px; align-items:start; padding:26px 0;
+    border-top:1px solid var(--linea-clara);
+  }
+  .carril:last-child{ border-bottom:1px solid var(--linea-clara); }
+  .carril-tag{ font-family:var(--font-mono); font-size:13px; color:var(--amarillo); letter-spacing:.04em; }
+  .carril h3{ font-size:18.5px; color:#fff; }
+  .carril p{ font-size:14px; line-height:1.6; color:var(--acero-2); }
+
+  /* ---------- SECTORES ---------- */
+  .sectores{ background:var(--concreto); }
+  .sector-chips{ display:flex; flex-wrap:wrap; gap:12px; }
+  .sector-chip{
+    background:var(--papel); border:1px solid var(--linea);
+    border-radius:24px; padding:11px 20px;
+    font-size:13.5px; font-weight:500; color:var(--noche);
+    display:flex; align-items:center; gap:9px;
+  }
+  .sector-chip .sw{ width:7px; height:7px; border-radius:50%; background:var(--naranja); flex:none; }
+
+  /* ---------- CONFIANZA ---------- */
+  .confianza{ background:var(--papel); }
+  .conf-grid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:var(--linea); border:1px solid var(--linea);
+  }
+  .conf-item{ background:var(--papel); padding:26px; text-align:left; }
+  .conf-item .k{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--acero);
+    text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px;
+  }
+  .conf-item .v{ font-family:var(--font-display); font-weight:600; font-size:15.5px; }
+
+  /* ---------- PADRONES Y COMERCIALIZADORA ---------- */
+  .padrones{ background:var(--concreto); }
+  .padrones-grid{
+    display:grid; grid-template-columns:repeat(2,1fr);
+    gap:1px; background:var(--linea); border:1px solid var(--linea);
+  }
+  .padrones-card{ background:var(--papel); padding:32px; }
+  .padrones-card h3{ font-size:18px; margin-bottom:10px; }
+  .padrones-card p{ font-size:14px; line-height:1.65; color:var(--acero); }
+
+  /* ---------- TIPS PRIMERA IMPORTACIÓN ---------- */
+  .tips{ background:var(--noche); color:var(--concreto); }
+  .tips .section-head h2{ color:#fff; }
+  .tips .section-head p{ color:var(--acero-2); }
+  .tips-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--linea-clara); border:1px solid var(--linea-clara);
+  }
+  .tip-card{ background:var(--noche-2); padding:26px; }
+  .tip-num{
+    font-family:var(--font-mono); font-size:12px; color:var(--amarillo);
+    display:block; margin-bottom:16px;
+  }
+  .tip-card h3{ font-size:15.5px; color:#fff; margin-bottom:8px; line-height:1.3; }
+  .tip-card p{ font-size:13px; line-height:1.6; color:var(--acero-2); }
+
+  /* ---------- FAQ ---------- */
+  .faq{ background:var(--papel); }
+  .faq-list{ display:flex; flex-direction:column; gap:1px; background:var(--linea); border:1px solid var(--linea); }
+  .faq-item{ background:var(--papel); padding:0; }
+  .faq-item summary{
+    padding:20px 22px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    cursor:pointer;
+    font-family:var(--font-display); font-weight:600; font-size:15.5px;
+    list-style:none;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary .faq-ico{
+    font-family:var(--font-mono); font-size:18px; color:var(--naranja);
+    flex:none; transition:transform .2s ease;
+  }
+  .faq-item[open] summary .faq-ico{ transform:rotate(45deg); }
+  .faq-item p{
+    padding:0 22px 22px; margin-top:-6px;
+    font-size:14px; line-height:1.65; color:var(--acero);
+    max-width:720px;
+  }
+
+  /* ---------- ASISTENTE LENO IA (módulo secundario) ---------- */
+  .asistente{ background:var(--concreto); }
+  .asistente-card{
+    background:var(--papel);
+    border:1px solid var(--linea);
+    border-radius:8px;
+    padding:36px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:28px;
+    align-items:center;
+  }
+  .asistente-avatar{
+    width:64px; height:64px; border-radius:50%;
+    overflow:hidden; flex:none;
+    border:2px solid var(--amarillo);
+  }
+  .asistente-avatar img{ width:100%; height:100%; object-fit:cover; }
+  .asistente-copy .eyebrow{ margin-bottom:8px; }
+  .asistente-copy h3{ font-size:19px; margin-bottom:8px; }
+  .asistente-copy p{ font-size:14px; line-height:1.6; color:var(--acero); max-width:480px; }
+  .asistente-copy strong{ color:var(--noche); }
+
+  /* ---------- CTA FINAL ---------- */
+  .cta-final{
+    background:linear-gradient(120deg, var(--naranja-oscuro) 0%, var(--naranja) 100%);
+    color:#fff; text-align:center;
+  }
+  .cta-final h2{ font-size:clamp(27px,3.8vw,42px); color:#fff; margin-bottom:15px; }
+  .cta-final p{ font-size:15.5px; color:rgba(255,255,255,0.9); max-width:520px; margin:0 auto 32px; }
+  .cta-final .btn-primary{ background:var(--noche); }
+  .cta-final .btn-ghost-dark:hover{ border-color:#fff; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background:var(--noche); color:var(--acero-2); padding:60px 0 28px; }
+  .foot-grid{
+    display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr;
+    gap:40px; padding-bottom:40px; border-bottom:1px solid var(--linea-clara);
+  }
+  .foot-brand .logo{ color:#fff; margin-bottom:14px; }
+  .foot-brand p{ font-size:13.5px; line-height:1.6; max-width:260px; }
+  .foot-col h4{
+    font-family:var(--font-mono); font-size:11.5px; text-transform:uppercase;
+    letter-spacing:.08em; color:#fff; margin-bottom:16px;
+  }
+  .foot-col a{ display:block; font-size:13.5px; padding:6px 0; color:var(--acero-2); transition:color .15s ease; }
+  .foot-col a:hover{ color:#fff; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:22px; font-size:12.5px; flex-wrap:wrap; gap:12px; }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.show{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:960px){
+    .serv-grid{ grid-template-columns:repeat(2,1fr); }
+    .conf-grid{ grid-template-columns:repeat(2,1fr); }
+    .foot-grid{ grid-template-columns:1fr 1fr; }
+    .carril{ grid-template-columns:1fr; gap:8px; }
+    .asistente-card{ grid-template-columns:1fr; text-align:center; }
+    .asistente-avatar{ margin:0 auto; }
+    .padrones-grid{ grid-template-columns:1fr; }
+    .tips-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:640px){
+    .navlinks{ display:none; }
+    .wrap{ padding:0 20px; }
+    nav{ padding:14px 20px; }
+    .hero-strip{ flex-wrap:wrap; gap:16px; }
+    .hero-strip div{ flex:1 1 40%; border-right:none; padding-right:0; }
+    .serv-grid{ grid-template-columns:1fr; }
+    .conf-grid{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr; }
+    .tips-grid{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="logo"><img src="assets/logo-icon.png" alt="Lenoah">LENOAH</a>
+    <div class="navlinks">
+      <a href="#servicios">Servicios</a>
+      <a href="#operacion">Operación</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#faq">Preguntas</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a href="#contacto" class="btn btn-naranja">Solicitar cotización</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="garita-canvas" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="eyebrow on-dark">AGENCIA ADUANAL · CONSORCIO DE COMERCIO EXTERIOR</div>
+        <h1>Vehículos, mercancía y carga comercial: cruzando la frontera <em>todos los días.</em></h1>
+        <p>Lenoah es una agencia aduanal con agentes certificados que gestiona importaciones completas — clasificación arancelaria, pedimentos, cruce y entrega — para negocios y particulares en la frontera Tijuana–San Diego.</p>
+        <div class="hero-ctas">
+          <a href="#contacto" class="btn btn-naranja">Solicitar cotización →</a>
+          <a href="#servicios" class="btn btn-ghost-dark">Ver servicios</a>
+        </div>
+        <div class="hero-strip">
+          <div><strong>4</strong><span>Líneas de servicio integradas</span></div>
+          <div><strong>100%</strong><span>Pedimentos con agente certificado</span></div>
+          <div><strong>1</strong><span>Garita, control total del cruce</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="garita-caption">
+      <div class="eyebrow on-dark">CRUCE TIJUANA – SAN DIEGO · 24/7</div>
+      <p>Cada estela de luz representa un cruce: uno hacia México, otro hacia Estados Unidos, sin parar.</p>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section class="servicios" id="servicios">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">SERVICIOS</div>
+        <h2>Un solo equipo para todo lo que se importa.</h2>
+        <p>Da igual si es un auto, un contenedor o una asesoría puntual: mismo estándar de agentes certificados en cada operación.</p>
+      </div>
+      <div class="serv-grid reveal">
+        <div class="serv-card">
+          <div class="serv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><rect x="2.5" y="13" width="19" height="5" rx="1.2"/><circle cx="7" cy="18.5" r="1.6"/><circle cx="17" cy="18.5" r="1.6"/></svg>
+          </div>
+          <h3>Importación de vehículos</h3>
+          <p>Cálculo de ISAN, DTA e IVA, verificación NOM y trámite completo de pedimento para autos de EE. UU. a México.</p>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>
+          </div>
+          <h3>Mercancía y carga comercial</h3>
+          <p>Importación de contenedores, carga LTL/FTL y embarques comerciales, con clasificación arancelaria desde el origen.</p>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="1.6"/><path d="M9 3.5V2h6v1.5"/><path d="M8.5 10.5l2 2 4.5-4.5"/><path d="M8 15.5h8"/></svg>
+          </div>
+          <h3>Gestoría aduanal integral</h3>
+          <p>Pedimentos, citas de cruce y seguimiento en tiempo real para cualquier tipo de operación, hasta la salida de aduana.</p>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l2 4-4 2 2-4-4 2 4-4z"/></svg>
+          </div>
+          <h3>Asesoría en comercio exterior</h3>
+          <p>Consultoría en clasificación arancelaria, regulaciones no arancelarias y estrategia de importación para tu negocio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPERACIÓN -->
+  <section class="operacion" id="operacion">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow on-dark">CÓMO OPERAMOS</div>
+        <h2>Cuatro carriles, un solo cruce.</h2>
+        <p>Igual que en la garita, cada operación avanza por un carril distinto — pero aquí tú siempre sabes en cuál vas.</p>
+      </div>
+      <div class="carril-list reveal">
+        <div class="carril">
+          <span class="carril-tag">CARRIL 01</span>
+          <h3>Cotización</h3>
+          <p>Nos compartes tu vehículo o mercancía por WhatsApp, teléfono o en oficina. En minutos tienes un estimado de impuestos y requisitos.</p>
+        </div>
+        <div class="carril">
+          <span class="carril-tag">CARRIL 02</span>
+          <h3>Documentación y clasificación</h3>
+          <p>Un agente certificado valida la fracción arancelaria, la factura y los requisitos NOM antes de generar el pedimento.</p>
+        </div>
+        <div class="carril">
+          <span class="carril-tag">CARRIL 03</span>
+          <h3>Despacho y cruce</h3>
+          <p>Programamos tu cita de cruce y damos seguimiento al pedimento en el sistema, carril verde o rojo, con tu operación lista.</p>
+        </div>
+        <div class="carril">
+          <span class="carril-tag">CARRIL 04</span>
+          <h3>Entrega y cierre</h3>
+          <p>Recibes tu mercancía, placas o carga liberada, junto con el expediente completo de la operación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTORES -->
+  <section class="sectores" id="nosotros">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">SECTORES</div>
+        <h2>Operamos con negocios y particulares por igual.</h2>
+        <p>Desde una importación única hasta operaciones recurrentes de comercio exterior.</p>
+      </div>
+      <div class="sector-chips reveal">
+        <div class="sector-chip"><span class="sw"></span>Automotriz</div>
+        <div class="sector-chip"><span class="sw"></span>Retail y e-commerce</div>
+        <div class="sector-chip"><span class="sw"></span>Manufactura</div>
+        <div class="sector-chip"><span class="sw"></span>Electrónica</div>
+        <div class="sector-chip"><span class="sw"></span>Insumos industriales</div>
+        <div class="sector-chip"><span class="sw"></span>Bienes de consumo</div>
+        <div class="sector-chip"><span class="sw"></span>Importadores particulares</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFIANZA -->
+  <section class="confianza">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">RESPALDO</div>
+        <h2>Agentes con patente vigente detrás de cada operación.</h2>
+        <p>La tecnología acelera el primer contacto; cada pedimento lo firma un agente aduanal certificado.</p>
+      </div>
+      <div class="conf-grid reveal">
+        <div class="conf-item"><div class="k">Patente aduanal</div><div class="v">Vigente ante el SAT</div></div>
+        <div class="conf-item"><div class="k">Cobertura</div><div class="v">Garita Tijuana–San Diego</div></div>
+        <div class="conf-item"><div class="k">Operación</div><div class="v">Vehículos, mercancía y carga comercial</div></div>
+        <div class="conf-item"><div class="k">Canal</div><div class="v">WhatsApp + oficina física</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PADRONES Y COMERCIALIZADORA -->
+  <section class="padrones">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">CAPACIDAD ADUANAL</div>
+        <h2>Padrones sectoriales vigentes y servicio de comercializadora.</h2>
+        <p>Muchas operaciones se caen justo aquí — por no tener el padrón correcto. Lenoah ya resolvió esa parte.</p>
+      </div>
+      <div class="padrones-grid reveal">
+        <div class="padrones-card">
+          <div class="serv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14.5 3v5h5"/><path d="M8.5 12.5l2 2 4-4.5"/><path d="M8 17h6"/></svg>
+          </div>
+          <h3>Diferentes padrones sectoriales</h3>
+          <p>Contamos con Padrón General de Importadores y un amplio catálogo de padrones de Sectores Específicos vigentes, para mover mercancía regulada sin que tú tengas que tramitarlos.</p>
+        </div>
+        <div class="padrones-card">
+          <div class="serv-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V9l6-4 6 4v12"/><path d="M9 21v-6h4v6"/><path d="M9 11h.01M13 11h.01"/></svg>
+          </div>
+          <h3>Servicio de comercializadora</h3>
+          <p>¿Tu empresa no tiene padrón propio o es tu primera importación? Lenoah puede operar como comercializadora e importar a tu nombre, de forma legal y documentada de principio a fin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIPS PRIMERA IMPORTACIÓN -->
+  <section class="tips">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow on-dark">¿ES TU PRIMERA VEZ?</div>
+        <h2>6 cosas que debes saber antes de importar.</h2>
+        <p>Lo que casi siempre nos preguntan quienes importan por primera vez.</p>
+      </div>
+      <div class="tips-grid reveal">
+        <div class="tip-card">
+          <span class="tip-num">01</span>
+          <h3>Verifica permisos y NOM antes de comprar</h3>
+          <p>Algunos productos requieren permiso previo o cumplir una Norma Oficial Mexicana. Revísalo antes de cerrar la compra, no después.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-num">02</span>
+          <h3>Junta una factura comercial completa</h3>
+          <p>Descripción detallada, valor, cantidad y país de origen. Una factura incompleta es la causa número uno de retrasos.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-num">03</span>
+          <h3>Presupuesta impuestos, no solo el precio de compra</h3>
+          <p>IGI, DTA e IVA se suman al costo del producto. Pide tu estimado antes de comprar, no al llegar a la garita.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-num">04</span>
+          <h3>Confirma si necesitas un padrón sectorial</h3>
+          <p>Ciertas mercancías exigen un padrón sectorial específico. Contamos con un amplio catálogo de padrones vigentes, y lo confirmamos por ti antes de cotizar.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-num">05</span>
+          <h3>Agenda tu cita de cruce con anticipación</h3>
+          <p>Sobre todo en temporada alta. Una cita agendada evita horas perdidas en la garita.</p>
+        </div>
+        <div class="tip-card">
+          <span class="tip-num">06</span>
+          <h3>Guarda tu expediente completo</h3>
+          <p>Pedimento, factura y COVE. Te sirven para aclaraciones futuras o una siguiente importación más rápida.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">PREGUNTAS FRECUENTES</div>
+        <h2>Lo que más nos preguntan.</h2>
+        <p>Si tu duda no está aquí, escríbenos y con gusto la resolvemos.</p>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary><span>¿Necesito un padrón de importador para traer mercancía a México?</span><span class="faq-ico">+</span></summary>
+          <p>Sí, en la mayoría de los casos se requiere estar inscrito en el Padrón de Importadores, y para ciertos productos también en un Padrón de Importadores de Sectores Específicos. Si no cuentas con alguno de los dos, Lenoah puede operar como comercializadora e importar a tu nombre.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>¿Cuánto tarda el proceso completo de importación?</span><span class="faq-ico">+</span></summary>
+          <p>Depende del tipo de mercancía y si tu pedimento resulta en reconocimiento aduanero (revisión física) o desaduanamiento libre. Una vez con la documentación completa, el trámite y cruce suelen resolverse en un par de días hábiles.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>¿Qué impuestos voy a pagar al importar?</span><span class="faq-ico">+</span></summary>
+          <p>En general se calculan el Impuesto General de Importación (IGI), el Derecho de Trámite Aduanero (DTA) y el IVA. Para vehículos se suma también el ISAN. Te damos un estimado antes de que decidas avanzar.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>¿Puedo importar como persona física, sin tener una empresa?</span><span class="faq-ico">+</span></summary>
+          <p>Sí, dependiendo del tipo y valor de la mercancía. En varios casos también podemos apoyarte con nuestro servicio de comercializadora si tú no cuentas con el padrón requerido.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>¿Qué pasa si mi pedimento sale en reconocimiento aduanero (luz roja)?</span><span class="faq-ico">+</span></summary>
+          <p>Un agente certificado te acompaña durante la revisión física. Por eso cuidamos que la documentación y clasificación arancelaria estén correctas desde el inicio: reduce el riesgo de observaciones.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span>¿Trabajan con cualquier tipo de mercancía?</span><span class="faq-ico">+</span></summary>
+          <p>Manejamos vehículos, carga comercial y mercancía general. Para sectores regulados bajo padrones específicos, lo confirmamos contigo antes de cotizar para asegurarnos de que podemos operar tu importación.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASISTENTE LENO IA (módulo secundario) -->
+  <section class="asistente">
+    <div class="wrap">
+      <div class="asistente-card reveal">
+        <div class="asistente-avatar">
+          <img src="assets/leno-ia-avatar.png" alt="LENO IA">
+        </div>
+        <div class="asistente-copy">
+          <div class="eyebrow">ATENCIÓN 24/7</div>
+          <h3>¿Prisa por una cotización? Escríbele a LENO IA.</h3>
+          <p><strong>LENO IA</strong> es nuestro asistente por WhatsApp: responde dudas frecuentes y arma un primer estimado en minutos. Cuando la operación lo requiere, te conecta directo con un agente humano.</p>
+        </div>
+        <a href="https://wa.me/526640000000" target="_blank" rel="noopener" class="btn btn-naranja btn-sm">Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final" id="contacto">
+    <div class="wrap">
+      <div class="reveal">
+        <h2>¿Listo para cruzar sin contratiempos?</h2>
+        <p>Cuéntanos qué necesitas importar y un agente de Lenoah te da seguimiento personal.</p>
+        <div class="hero-ctas" style="justify-content:center;">
+          <a href="https://wa.me/526640000000" target="_blank" rel="noopener" class="btn btn-primary">Escribir por WhatsApp</a>
+          <a href="tel:+526640000000" class="btn btn-ghost-dark">Llamar a la oficina</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#top" class="logo"><img src="assets/logo-icon.png" alt="Lenoah">LENOAH</a>
+        <p>Agencia aduanal y consorcio de comercio exterior en la frontera Tijuana–San Diego. Importación de vehículos, mercancía y carga comercial con agentes certificados.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Servicios</h4>
+        <a href="#servicios">Importación de vehículos</a>
+        <a href="#servicios">Mercancía y carga comercial</a>
+        <a href="#servicios">Gestoría aduanal</a>
+        <a href="#servicios">Asesoría en comercio exterior</a>
+      </div>
+      <div class="foot-col">
+        <h4>Empresa</h4>
+        <a href="#operacion">Cómo operamos</a>
+        <a href="#nosotros">Sectores</a>
+        <a href="#faq">Preguntas frecuentes</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#">Aviso de privacidad</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contacto</h4>
+        <a href="https://wa.me/526640000000" target="_blank" rel="noopener">WhatsApp: +52 664 000 0000</a>
+        <a href="mailto:hola@lenoah.mx">hola@lenoah.mx</a>
+        <a href="#">Tijuana, Baja California</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Lenoah. Todos los derechos reservados.</span>
+      <span>Comercio exterior con respaldo humano.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  /* ==========================================================
+     Fondo cinemático: cruce fronterizo de noche con estelas
+     de luz (estilo fotografía de larga exposición), reflejo
+     en el pavimento y siluetas de casetas/postes de garita.
+  ========================================================== */
+  (function(){
+    const canvas = document.getElementById('garita-canvas');
+    const ctx = canvas.getContext('2d');
+    const hero = canvas.closest('.hero');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let W, H, DPR, groundY;
+    let streaks = [];
+    let bokeh = [];
+
+    function resize(){
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = hero.offsetWidth;
+      H = hero.offsetHeight;
+      canvas.width = W * DPR;
+      canvas.height = H * DPR;
+      canvas.style.width = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      groundY = H * 0.64;
+      ctx.fillStyle = '#150D05';
+      ctx.fillRect(0,0,W,H);
+      buildScene();
+    }
+
+    const LANES = [];
+    function buildScene(){
+      // carriles de cruce (varios van a EE. UU., otros a México)
+      LANES.length = 0;
+      const top = H*0.30, bottom = groundY - 10;
+      const n = 5;
+      for(let i=0;i<n;i++){
+        LANES.push({
+          y: top + ((bottom-top)/(n-1))*i,
+          dir: i % 2 === 0 ? 1 : -1 // alterna dirección
+        });
+      }
+
+      // luces distantes (bokeh)
+      bokeh = [];
+      const bn = 22;
+      for(let i=0;i<bn;i++){
+        bokeh.push({
+          x: Math.random()*W,
+          y: Math.random()*(H*0.42),
+          r: 1.4 + Math.random()*2.6,
+          baseA: 0.15 + Math.random()*0.35,
+          phase: Math.random()*Math.PI*2,
+          speed: 0.15 + Math.random()*0.2,
+          hue: Math.random() > 0.5 ? '247,195,49' : '252,247,236'
+        });
+      }
+
+      streaks = [];
+    }
+
+    function spawnStreak(lane){
+      const fromLeft = lane.dir === 1;
+      streaks.push({
+        lane,
+        x: fromLeft ? -60 - Math.random()*160 : W + 60 + Math.random()*160,
+        len: 70 + Math.random()*90,
+        speed: (1.1 + Math.random()*1.3) * lane.dir,
+        color: fromLeft ? '252,247,236' : '229,120,60', // saliendo: cálido claro / entrando: ámbar-rojizo
+        alpha: 0.55 + Math.random()*0.35
+      });
+    }
+
+    function drawStaticStructures(){
+      // caseta / canopy central de inspección
+      const cw = W*0.20, cx = W*0.5 - cw/2, roofY = groundY - 92, roofH = 10;
+      ctx.fillStyle = 'rgba(10,7,3,0.92)';
+      ctx.fillRect(cx, roofY, cw, roofH);
+      ctx.fillRect(cx+8, roofY+roofH, 7, 82);
+      ctx.fillRect(cx+cw-15, roofY+roofH, 7, 82);
+
+      // postes de iluminación a los lados
+      const masts = [W*0.08, W*0.22, W*0.78, W*0.92];
+      masts.forEach((mx,i)=>{
+        const mh = 70 + (i%2===0 ? 18 : 0);
+        ctx.fillStyle = 'rgba(10,7,3,0.92)';
+        ctx.fillRect(mx-1.5, groundY-mh, 3, mh);
+        ctx.fillRect(mx-11, groundY-mh-5, 22, 5);
+        // resplandor cálido de la lámpara
+        const g = ctx.createRadialGradient(mx, groundY-mh-3, 0, mx, groundY-mh-3, 26);
+        g.addColorStop(0, 'rgba(247,195,49,0.55)');
+        g.addColorStop(1, 'rgba(247,195,49,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(mx, groundY-mh-3, 26, 0, Math.PI*2);
+        ctx.fill();
+      });
+    }
+
+    function frame(now){
+      // capa de desvanecimiento (crea el efecto de estela de larga exposición)
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = 'rgba(21,13,5,0.16)';
+      ctx.fillRect(0,0,W,H);
+
+      // suelo / piso mojado con degradado
+      const groundGrad = ctx.createLinearGradient(0, groundY, 0, H);
+      groundGrad.addColorStop(0, 'rgba(10,7,3,1)');
+      groundGrad.addColorStop(1, 'rgba(5,3,1,1)');
+      ctx.fillStyle = groundGrad;
+      ctx.fillRect(0, groundY, W, H-groundY);
+
+      drawStaticStructures();
+
+      // luces distantes parpadeando
+      bokeh.forEach(b=>{
+        const a = b.baseA + Math.sin(now*0.001*b.speed + b.phase) * 0.12;
+        const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r*4);
+        g.addColorStop(0, `rgba(${b.hue},${Math.max(a,0)})`);
+        g.addColorStop(1, `rgba(${b.hue},0)`);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.r*4, 0, Math.PI*2);
+        ctx.fill();
+      });
+
+      if(reduceMotion){
+        // marco estático: un par de estelas fijas por carril, sin animación
+        LANES.forEach(lane=>{
+          ctx.strokeStyle = `rgba(${lane.dir===1 ? '252,247,236' : '229,120,60'},0.5)`;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(W*0.15, lane.y);
+          ctx.lineTo(W*0.45, lane.y);
+          ctx.stroke();
+        });
+        return;
+      }
+
+      // estelas de luz (aditivo, efecto de brillo real)
+      ctx.globalCompositeOperation = 'lighter';
+      streaks.forEach(s=>{
+        s.x += s.speed;
+        const tailX = s.x - s.len*Math.sign(s.speed||1);
+        const grad = ctx.createLinearGradient(s.x, s.lane.y, tailX, s.lane.y);
+        grad.addColorStop(0, `rgba(${s.color},${s.alpha})`);
+        grad.addColorStop(1, `rgba(${s.color},0)`);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2.2;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.lane.y);
+        ctx.lineTo(tailX, s.lane.y);
+        ctx.stroke();
+
+        // cabeza brillante (faro)
+        const headG = ctx.createRadialGradient(s.x, s.lane.y, 0, s.x, s.lane.y, 5);
+        headG.addColorStop(0, `rgba(${s.color},${Math.min(s.alpha+0.2,1)})`);
+        headG.addColorStop(1, `rgba(${s.color},0)`);
+        ctx.fillStyle = headG;
+        ctx.beginPath();
+        ctx.arc(s.x, s.lane.y, 5, 0, Math.PI*2);
+        ctx.fill();
+
+        // reflejo tenue en el piso mojado
+        const ry = groundY + (groundY - s.lane.y)*0.22;
+        if(ry < H){
+          const rGrad = ctx.createLinearGradient(s.x, ry, tailX, ry);
+          rGrad.addColorStop(0, `rgba(${s.color},${s.alpha*0.28})`);
+          rGrad.addColorStop(1, `rgba(${s.color},0)`);
+          ctx.strokeStyle = rGrad;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(s.x, ry);
+          ctx.lineTo(tailX, ry);
+          ctx.stroke();
+        }
+      });
+      ctx.globalCompositeOperation = 'source-over';
+
+      streaks = streaks.filter(s => s.x > -260 && s.x < W+260);
+      if(Math.random() < 0.045){
+        const lane = LANES[Math.floor(Math.random()*LANES.length)];
+        spawnStreak(lane);
+      }
+
+      requestAnimationFrame(frame);
+    }
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    if(reduceMotion){ frame(performance.now()); }
+    else { requestAnimationFrame(frame); }
+  })();
+</script>
+
+</body>
+</html>

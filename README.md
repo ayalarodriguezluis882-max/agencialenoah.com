@@ -10,8 +10,10 @@ El protagonista es Lenoah y sus operaciones: importación de vehículos,
 mercancía y carga comercial, gestoría aduanal integral, y asesoría en
 comercio exterior — con agentes certificados detrás de cada pedimento.
 
-**LENO IA** (el asistente por WhatsApp) aparece como una herramienta de apoyo a ventas
-dentro de un módulo secundario ("Atención 24/7"), no como el tema central de la página.
+**LENO IA** ahora es un **chatbot real** (conectado a Gemini vía un backend
+en Cloudflare Workers), no solo un link a WhatsApp — ver la sección
+"Chatbot LENO IA" más abajo. En el sitio aparece como un botón flotante
+en las 4 páginas, además del módulo de "Atención 24/7" en `index.html`.
 
 El fondo del hero (solo en `index.html`) es un canvas animado estilo fotografía
 de larga exposición: estelas de luz cruzando en ambos sentidos (México ⇄ EE. UU.),
@@ -45,21 +47,56 @@ reflejo tenue en el piso y siluetas de caseta/postes de garita. Respeta
 3. Resumen de padrones sectoriales/comercializadora con link a `index.html#padrones`
 4. CTA final + footer
 
-Para agregar una cuarta página, copia el `<head>` y el `<header>`/`<footer>`
-de `nosotros.html` o `servicios.html` (ya usan rutas relativas correctas) y
-enlázala desde el nav de las tres páginas existentes.
+**`cotizador.html`** — cotizador virtual (nuevo)
+1. Banner de página
+2. Formulario multi-paso (vanilla JS, sin dependencias): elige vehículo o
+   mercancía → captura datos → muestra un **rango estimado** de impuestos →
+   pide nombre/WhatsApp → arma un mensaje pre-llenado a WhatsApp con todo
+   el contexto para que un agente confirme el monto real
+3. CTA final + footer
+
+El cotizador **no calcula impuestos oficiales** — usa porcentajes ilustrativos
+sobre el valor declarado (15–30% para vehículos, 16–35% para mercancía) y lo
+deja explícito con un aviso. El objetivo es dar una referencia rápida y
+capturar el lead con contexto completo, no reemplazar al agente aduanal.
+Los rangos de porcentaje están en `cotizador.html` dentro de la función
+`calcular()` si alguna vez hay que ajustarlos.
+
+Para agregar una quinta página, copia el `<head>` y el `<header>`/`<footer>`
+de cualquiera de las páginas existentes (ya usan rutas relativas correctas)
+y enlázala desde el nav de todas.
+
+## Chatbot LENO IA
+
+El widget de chat flotante (`assets/chat-widget.js`) aparece en las 4
+páginas. Habla con un backend separado en Cloudflare Workers
+(`worker/leno-ia-worker.js`) que a su vez llama a la API de Gemini —
+la API key nunca queda expuesta en el sitio estático.
+
+**Este backend no se despliega solo con subir archivos a GitHub** —
+necesita configurarse una vez en una cuenta de Cloudflare (gratis).
+Sigue **`worker/README.md`** paso a paso (~15 minutos, sin instalar nada).
+
+Hasta que se configure, el widget sigue siendo útil: se muestra igual,
+pero en vez de fallar le avisa al visitante que escriba a un agente por
+WhatsApp.
 
 ## Estructura de archivos
 
 ```
 /
-├── index.html          # Página principal
-├── nosotros.html        # Página "Quiénes somos" (misión, visión, trayectoria)
-├── servicios.html        # Página de servicios a detalle
+├── index.html            # Página principal
+├── nosotros.html          # Página "Quiénes somos" (misión, visión, trayectoria)
+├── servicios.html          # Página de servicios a detalle
+├── cotizador.html          # Cotizador virtual multi-paso
 ├── assets/
-│   ├── styles.css        # CSS compartido entre todas las páginas
+│   ├── styles.css          # CSS compartido entre todas las páginas
+│   ├── chat-widget.js      # Widget de chat flotante (LENO IA)
 │   ├── logo.png / logo-icon.png
 │   └── leno-ia-avatar.png / leno-ia-bot.jpg
+├── worker/
+│   ├── leno-ia-worker.js   # Backend del chatbot (se despliega en Cloudflare)
+│   └── README.md           # Cómo desplegarlo, paso a paso
 └── README.md
 ```
 
@@ -102,6 +139,8 @@ protagónico de la página.
 - [ ] Confirmar si "Sectores" refleja los verticales reales que atiende Lenoah
 - [ ] Revisar el texto de Misión, Visión y Trayectoria en `nosotros.html` — lo redacté yo con lo que sabía del negocio; ajústalo si algo no encaja con cómo se ven a sí mismos
 - [ ] Conectar el botón de WhatsApp al número/bot real de LENO IA (WhatsApp Business)
+- [ ] Revisar si los rangos de % del cotizador (15–30% vehículos, 16–35% mercancía) son razonables para tu operación real, o prefieres ajustarlos
+- [ ] Desplegar el backend del chatbot (ver `worker/README.md`) — sin esto, el botón de chat aparece pero no responde con IA todavía
 - [ ] Configurar Google Analytics / Search Console (como en simuladordepedimento.com)
 
 ## Desarrollo local

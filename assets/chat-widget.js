@@ -5,18 +5,18 @@
  * </body> en cada página. Construye el botón flotante y el panel
  * de chat, y los inyecta en el DOM (así no hay que repetir el
  * HTML del widget en cada página).
- *
- * IMPORTANTE: reemplaza LENO_IA_ENDPOINT con la URL de tu Worker
- * una vez desplegado (ver /worker/README.md). Mientras diga
- * "REEMPLAZA-CON-TU-WORKER", el widget muestra un mensaje
- * explicando que todavía no está conectado, en vez de fallar.
  */
 (function(){
-  const LENO_IA_ENDPOINT = 'https://REEMPLAZA-CON-TU-WORKER.workers.dev/';
+  const LENO_IA_ENDPOINT = 'https://leno-ia.agencialenoah.workers.dev/';
   const WHATSAPP_NUMBER = '526640000000';
   const AVATAR = 'assets/leno-ia-avatar.png';
 
   const NOT_CONFIGURED = LENO_IA_ENDPOINT.includes('REEMPLAZA-CON-TU-WORKER');
+
+  // id de sesión: agrupa los mensajes de esta visita en la bitácora
+  // del panel de administrador (/admin en el Worker). Vive solo en
+  // memoria del navegador, no se guarda en ningún lado del cliente.
+  const sessionId = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
 
   // ---------- construir el DOM del widget ----------
   const btn = document.createElement('button');
@@ -110,7 +110,7 @@
       const res = await fetch(LENO_IA_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: history }),
+        body: JSON.stringify({ messages: history, session_id: sessionId }),
       });
       const data = await res.json();
       typingEl.remove();

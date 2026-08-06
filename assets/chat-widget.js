@@ -8,7 +8,7 @@
  */
 (function(){
   const LENO_IA_ENDPOINT = 'https://leno-ia.agencialenoah.workers.dev/';
-  const WHATSAPP_NUMBER = '526640000000';
+  const WHATSAPP_NUMBER = '526645870430';
   const AVATAR = 'assets/leno-ia-avatar.png';
 
   const NOT_CONFIGURED = LENO_IA_ENDPOINT.includes('REEMPLAZA-CON-TU-WORKER');
@@ -50,6 +50,32 @@
   document.body.appendChild(panel);
   document.body.appendChild(btn);
 
+  // ---------- globo de saludo automático (le da "vida" al botón) ----------
+  const hint = document.createElement('div');
+  hint.className = 'leno-widget-hint';
+  hint.innerHTML = `¿Tienes dudas sobre importar? Pregúntame 👋<button aria-label="Cerrar aviso">&times;</button>`;
+  document.body.appendChild(hint);
+
+  let hintTimer = setTimeout(() => {
+    if(!panel.classList.contains('open')){
+      hint.classList.add('show');
+      hintAutoHide = setTimeout(() => hint.classList.remove('show'), 9000);
+    }
+  }, 3500);
+  let hintAutoHide = null;
+
+  function hideHint(){
+    hint.classList.remove('show');
+    clearTimeout(hintTimer);
+    clearTimeout(hintAutoHide);
+  }
+
+  hint.addEventListener('click', (e) => {
+    if(e.target.tagName === 'BUTTON'){ hideHint(); return; }
+    hideHint();
+    openPanel();
+  });
+
   const body = panel.querySelector('#leno-w-body');
   const input = panel.querySelector('#leno-w-input');
   const sendBtn = panel.querySelector('#leno-w-send');
@@ -86,7 +112,7 @@
     input.focus();
   }
 
-  btn.addEventListener('click', openPanel);
+  btn.addEventListener('click', () => { hideHint(); openPanel(); });
   closeBtn.addEventListener('click', () => panel.classList.remove('open'));
 
   async function sendMessage(){

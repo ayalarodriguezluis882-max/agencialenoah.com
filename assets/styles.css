@@ -305,8 +305,8 @@
   /* ---------- FOOTER ---------- */
   footer{ background:var(--noche); color:var(--acero-2); padding:60px 0 28px; }
   .foot-grid{
-    display:grid; grid-template-columns:1.3fr 1fr 1fr 1fr;
-    gap:40px; padding-bottom:40px; border-bottom:1px solid var(--linea-clara);
+    display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr 0.8fr;
+    gap:32px; padding-bottom:40px; border-bottom:1px solid var(--linea-clara);
   }
   .foot-brand .logo{ color:#fff; margin-bottom:14px; }
   .foot-brand p{ font-size:13.5px; line-height:1.6; max-width:260px; }
@@ -716,4 +716,76 @@
       right:12px; left:12px; width:auto; bottom:88px;
     }
     .leno-widget-btn{ right:16px; bottom:16px; }
+  }
+  /* ---------- VIDA EN EL WIDGET (pulso + globo de saludo) ---------- */
+  .leno-widget-btn{ position:fixed; } /* asegura contexto para el pulso */
+  .leno-widget-btn::before{
+    content:"";
+    position:absolute;
+    inset:-8px;
+    border-radius:50%;
+    border:2px solid var(--naranja);
+    opacity:0;
+    animation:leno-pulse-ring 2.6s ease-out infinite;
+    pointer-events:none;
+  }
+  @keyframes leno-pulse-ring{
+    0%{ transform:scale(0.85); opacity:.55; }
+    70%{ transform:scale(1.35); opacity:0; }
+    100%{ transform:scale(1.35); opacity:0; }
+  }
+  .leno-widget-btn .dot{
+    animation:leno-dot-blink 2s ease-in-out infinite;
+  }
+  @keyframes leno-dot-blink{
+    0%,100%{ opacity:1; }
+    50%{ opacity:.45; }
+  }
+
+  .leno-widget-hint{
+    position:fixed;
+    right:22px;
+    bottom:92px;
+    z-index:199;
+    max-width:220px;
+    background:var(--papel);
+    color:var(--noche);
+    border:1px solid var(--linea);
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:13px;
+    line-height:1.45;
+    box-shadow:0 14px 30px rgba(33,22,9,0.18);
+    opacity:0;
+    transform:translateY(8px);
+    pointer-events:none;
+    transition:opacity .35s ease, transform .35s ease;
+  }
+  .leno-widget-hint.show{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .leno-widget-hint::after{
+    content:"";
+    position:absolute;
+    bottom:-7px; right:26px;
+    width:14px; height:14px;
+    background:var(--papel);
+    border-right:1px solid var(--linea);
+    border-bottom:1px solid var(--linea);
+    transform:rotate(45deg);
+  }
+  .leno-widget-hint button{
+    position:absolute; top:4px; right:6px;
+    background:none; border:none; color:var(--acero);
+    font-size:14px; cursor:pointer; line-height:1; padding:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .leno-widget-btn::before{ animation:none; opacity:0; }
+    .leno-widget-btn .dot{ animation:none; }
+  }
+  @media (max-width:480px){
+    .leno-widget-hint{ right:16px; bottom:82px; max-width:calc(100vw - 90px); }
   }

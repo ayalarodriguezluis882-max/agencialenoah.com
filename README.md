@@ -47,20 +47,17 @@ reflejo tenue en el piso y siluetas de caseta/postes de garita. Respeta
 3. Resumen de padrones sectoriales/comercializadora con link a `index.html#padrones`
 4. CTA final + footer
 
-**`cotizador.html`** — cotizador virtual (nuevo)
-1. Banner de página
-2. Formulario multi-paso (vanilla JS, sin dependencias): elige vehículo o
-   mercancía → captura datos → muestra un **rango estimado** de impuestos →
-   pide nombre/WhatsApp → arma un mensaje pre-llenado a WhatsApp con todo
-   el contexto para que un agente confirme el monto real
-3. CTA final + footer
-
-El cotizador **no calcula impuestos oficiales** — usa porcentajes ilustrativos
-sobre el valor declarado (15–30% para vehículos, 16–35% para mercancía) y lo
-deja explícito con un aviso. El objetivo es dar una referencia rápida y
-capturar el lead con contexto completo, no reemplazar al agente aduanal.
-Los rangos de porcentaje están en `cotizador.html` dentro de la función
-`calcular()` si alguna vez hay que ajustarlos.
+**Cotizador virtual — retirado del sitio (Agosto 2026).** Existió como
+`cotizador.html`, un formulario multi-paso que daba un rango estimado de
+impuestos según un % fijo sobre el valor declarado. Se quitó porque no
+validaba si la mercancía tenía alguna regulación o estaba prohibida antes
+de calcular — daba un número aunque el producto no se pudiera importar.
+El archivo original queda respaldado fuera del repo por si se retoma más
+adelante con una lógica que sí revise restricciones antes de estimar.
+LENO IA (el chatbot) es ahora el único punto de cotización del sitio, y
+su system prompt (`worker/leno-ia-worker.js`) ya incluye la regla de
+nunca calcular ni prometer un impuesto sin antes confirmar que el
+producto no está prohibido o restringido.
 
 Para agregar una quinta página, copia el `<head>` y el `<header>`/`<footer>`
 de cualquiera de las páginas existentes (ya usan rutas relativas correctas)
@@ -88,7 +85,6 @@ WhatsApp.
 ├── index.html            # Página principal
 ├── nosotros.html          # Página "Quiénes somos" (misión, visión, trayectoria)
 ├── servicios.html          # Página de servicios a detalle
-├── cotizador.html          # Cotizador virtual multi-paso
 ├── assets/
 │   ├── styles.css          # CSS compartido entre todas las páginas
 │   ├── chat-widget.js      # Widget de chat flotante (LENO IA)
@@ -134,14 +130,16 @@ protagónico de la página.
 
 ## Pendientes antes de publicar
 
-- [ ] Reemplazar número de WhatsApp placeholder (`526640000000`) en `index.html`
-- [ ] Agregar correo y dirección real en la sección de contacto y footer
+- [x] Reemplazar número de WhatsApp placeholder por el real (`526645870430`)
+- [x] Agregar dirección real de la oficina en el footer
+- [x] Conectar redes sociales (Instagram, Facebook, YouTube, TikTok) en el footer
+- [x] Desplegar el backend del chatbot — ya está en producción (`leno-ia.agencialenoah.workers.dev`)
+- [ ] Agregar correo real si `hola@lenoah.mx` no es la cuenta definitiva
 - [ ] Confirmar si "Sectores" refleja los verticales reales que atiende Lenoah
 - [ ] Revisar el texto de Misión, Visión y Trayectoria en `nosotros.html` — lo redacté yo con lo que sabía del negocio; ajústalo si algo no encaja con cómo se ven a sí mismos
-- [ ] Conectar el botón de WhatsApp al número/bot real de LENO IA (WhatsApp Business)
-- [ ] Revisar si los rangos de % del cotizador (15–30% vehículos, 16–35% mercancía) son razonables para tu operación real, o prefieres ajustarlos
-- [ ] Desplegar el backend del chatbot (ver `worker/README.md`) — sin esto, el botón de chat aparece pero no responde con IA todavía
-- [ ] Configurar Google Analytics / Search Console (como en simuladordepedimento.com)
+- [ ] Conectar WhatsApp Business (número real ya definido: 664 587 0430) al mismo chatbot — pendiente de que llegue el chip/verificación
+- [ ] Configurar Google Analytics / Cloudflare Web Analytics para medir tráfico
+- [ ] Comprar y conectar el dominio .com — planeado como el último paso
 
 ## Desarrollo local
 

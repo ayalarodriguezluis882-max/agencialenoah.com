@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ayalarodriguezluis882-max.github.io/agencialenoah.com/sitemap.xml

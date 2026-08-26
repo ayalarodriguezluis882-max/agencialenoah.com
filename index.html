@@ -51,6 +51,41 @@
 
   gtag('config', 'G-F1V2E6VB3N');
 </script>
+<style>
+  .btn-inline-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 9px 16px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    font-size: 13.5px;
+    color: #E5783C;
+    background: rgba(229,120,60,0.08);
+    border: 1.5px solid rgba(229,120,60,0.35);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .btn-inline-cta:hover {
+    background: rgba(229,120,60,0.16);
+    border-color: #E5783C;
+    transform: translateY(-1px);
+  }
+  .btn-inline-cta .cta-arrow {
+    transition: transform 0.2s ease;
+  }
+  .btn-inline-cta:hover .cta-arrow {
+    transform: translateX(3px);
+  }
+  .explore-more-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 36px;
+  }
+</style>
 </head>
 <body>
 
@@ -121,7 +156,7 @@
           </div>
           <h3>Importación de vehículos</h3>
           <p>Cálculo de ISAN, DTA e IVA, verificación NOM y trámite completo de pedimento para autos de EE. UU. a México.</p>
-          <a href="costo-importar-vehiculo.html" class="btn btn-ghost" style="margin-top:12px; display:inline-block;">Ver costos de importación →</a>
+          <a href="costo-importar-vehiculo.html" class="btn-inline-cta">Ver costos de importación <span class="cta-arrow">→</span></a>
         </div>
         <div class="serv-card">
           <div class="serv-icon">
@@ -129,7 +164,7 @@
           </div>
           <h3>Mercancía y carga comercial</h3>
           <p>Importación de contenedores, carga LTL/FTL y embarques comerciales, con clasificación arancelaria desde el origen.</p>
-          <a href="importar-mercancia-primera-vez.html" class="btn btn-ghost" style="margin-top:12px; display:inline-block;">Guía de primera importación →</a>
+          <a href="importar-mercancia-primera-vez.html" class="btn-inline-cta">Guía de primera importación <span class="cta-arrow">→</span></a>
         </div>
         <div class="serv-card">
           <div class="serv-icon">
@@ -146,8 +181,10 @@
           <p>Consultoría en clasificación arancelaria, regulaciones no arancelarias y estrategia de importación para tu negocio.</p>
         </div>
       </div>
-      <a href="servicios.html" class="btn btn-ghost" style="margin-top:36px;">Ver todos los servicios a detalle →</a>
-      <a href="que-podemos-importar.html" class="btn btn-ghost" style="margin-top:36px; margin-left:14px;">¿Qué más podemos importar? →</a>
+      <div class="explore-more-row">
+        <a href="servicios.html" class="btn btn-naranja">Ver todos los servicios a detalle →</a>
+        <a href="que-podemos-importar.html" class="btn btn-naranja">¿Qué más podemos importar? →</a>
+      </div>
     </div>
   </section>
 

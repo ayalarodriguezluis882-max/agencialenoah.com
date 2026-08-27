@@ -10,6 +10,8 @@
   const LENO_IA_ENDPOINT = 'https://leno-ia.agencialenoah.workers.dev/';
   const WHATSAPP_NUMBER = '526645870430';
   const AVATAR = 'assets/leno-ia-avatar.png';
+  const AVATAR_VIDEO = 'assets/bot-avatar.mp4';
+  const AVATAR_VIDEO_POSTER = 'assets/bot-avatar-poster.jpg';
 
   const NOT_CONFIGURED = LENO_IA_ENDPOINT.includes('REEMPLAZA-CON-TU-WORKER');
 
@@ -22,7 +24,7 @@
   const btn = document.createElement('button');
   btn.className = 'leno-widget-btn';
   btn.setAttribute('aria-label', 'Abrir chat con LENO IA');
-  btn.innerHTML = `<img src="${AVATAR}" alt="LENO IA"><span class="dot"></span>`;
+  btn.innerHTML = `<video autoplay muted loop playsinline preload="auto" poster="${AVATAR_VIDEO_POSTER}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;pointer-events:none;"><source src="${AVATAR_VIDEO}" type="video/mp4"></video><span class="dot"></span>`;
 
   const panel = document.createElement('div');
   panel.className = 'leno-widget-panel';

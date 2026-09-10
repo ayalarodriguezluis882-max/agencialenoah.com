@@ -85,22 +85,27 @@
     gap: 16px;
     margin-top: 36px;
   }
+  :root {
+    --logo-h: clamp(48px, 11vw, 160px);
+  }
   .logo {
     position: relative;
     display: inline-flex;
     align-items: center;
-    padding-left: 290px;
+    padding-left: calc(var(--logo-h) * 1.78);
   }
   .logo video {
     position: absolute;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    height: 160px;
+    height: var(--logo-h);
     width: auto;
     object-fit: contain;
     pointer-events: none;
     mix-blend-mode: multiply;
+    -webkit-mask-image: radial-gradient(closest-side, black 62%, transparent 100%);
+    mask-image: radial-gradient(closest-side, black 62%, transparent 100%);
   }
   .asistente-avatar video {
     width: 100%;
